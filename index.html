@@ -1,10 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geremias Marquez — Senior Full-Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0d0d0d;
+    --ink2: #3a3a3a;
+    --ink3: #6b6b6b;
+    --paper: #f8f6f1;
+    --accent: #c8410a;
+    --accent2: #1a5c3a;
+    --line: rgba(13,13,13,0.12);
+    --mono: 'DM Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --serif: 'Instrument Serif', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--display);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* LANG BAR */
+  .lang-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.6rem 2rem;
+  }
+
+  .lang-toggle {
+    display: flex;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .lang-btn {
+    padding: 5px 16px;
+    cursor: pointer;
+    border: none;
+    border-right: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink3);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .lang-btn:last-child { border-right: none; }
+  .lang-btn.active { background: var(--ink); color: var(--paper); }
+  .lang-btn:hover:not(.active) { background: rgba(13,13,13,0.06); color: var(--ink); }
+
+  /* LAYOUT */
+  .page { max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* HERO */
+  .hero {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: 'GMM';
+    position: absolute;
+    right: -0.05em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(120px, 20vw, 200px);
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(13,13,13,0.06);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .tag-line {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(42px, 8vw, 76px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .hero-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--ink2);
+    max-width: 560px;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+
+  .kpi-row { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .kpi { display: flex; flex-direction: column; }
+
+  .kpi-num { font-size: 36px; font-weight: 800; line-height: 1; color: var(--ink); }
+  .kpi-num span { color: var(--accent); }
+
+  .kpi-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink3);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  /* CONTACT BAR */
+  .contact-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink3);
+  }
+
+  .contact-bar a { color: var(--ink2); text-decoration: none; transition: color 0.2s; }
+  .contact-bar a:hover { color: var(--accent); }
+  .contact-bar .dot { color: rgba(13,13,13,0.2); }
+
+  /* SECTION */
+  section { padding: 3rem 0; border-bottom: 1px solid var(--line); }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .skill-block { background: var(--paper); padding: 1.25rem 1.5rem; }
+
+  .skill-block-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    color: var(--ink2);
+    background: transparent;
+  }
+
+  .tag.hot { border-color: var(--accent); color: var(--accent); }
+
+  /* EXPERIENCE */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .exp-item:last-child { margin-bottom: 0; }
+  .exp-role { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+
+  .exp-company {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--accent2);
+    font-size: 15px;
+    margin: 2px 0 10px;
+  }
+
+  .exp-years {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  .exp-bullets { list-style: none; grid-column: 1 / -1; }
+
+  .exp-bullets li {
+    font-size: 14px;
+    color: var(--ink2);
+    line-height: 1.65;
+    padding: 5px 0 5px 1.1rem;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '\2192';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+    top: 7px;
+  }
+
+  /* APPS STRIP */
+  .apps-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+
+  .app-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    letter-spacing: 0.05em;
+  }
+
+  /* CLOUD GRID */
+  .cloud-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 1.5rem;
+  }
+
+  .cloud-item { background: var(--paper); padding: 1rem 1.25rem; font-size: 13px; }
+
+  .cloud-item strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 6px;
+  }
+
+  .cloud-item span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink2);
+    line-height: 1.8;
+  }
+
+  /* EDUCATION */
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .edu-degree { font-size: 20px; font-weight: 700; }
+  .edu-school { font-family: var(--serif); font-style: italic; color: var(--ink3); font-size: 15px; }
+  .edu-year { font-family: var(--mono); font-size: 11px; color: var(--ink3); }
+
+  /* FOOTER */
+  .footer {
+    padding: 2rem 0 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink3);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: none;
+  }
+
+  /* TRANSITION */
+  .fade { transition: opacity 0.15s ease; }
+  body.lang-switching .fade { opacity: 0; }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .hero::before { display: none; }
+    .lang-bar { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 1.25rem 4rem; }
+    .lang-bar { padding: 0.6rem 1.25rem; }
+    .hero { padding: 2.5rem 0 2rem; }
+    .kpi-row { gap: 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-years { padding-top: 0; }
+  }
+</style>
 </head>
 <body>
-$END$
+
+<div class="lang-bar">
+  <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <header class="hero">
+    <p class="tag-line fade" data-i18n="tagline">Senior Full-Stack Engineer · Mobile Architect · Cloud Specialist</p>
+    <h1>Geremias<br><span>Marquez</span><br>Matias</h1>
+    <p class="hero-sub fade" data-i18n="heroSub">12+ years engineering high-availability platforms, enterprise-grade mobile ecosystems, and cloud-native automation at scale.</p>
+    <div class="kpi-row">
+      <div class="kpi">
+        <span class="kpi-num">12<span>+</span></span>
+        <span class="kpi-label fade" data-i18n="kpi1">Years in production</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num">40<span>+</span></span>
+        <span class="kpi-label fade" data-i18n="kpi2">Apps shipped</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num">~100<span>%</span></span>
+        <span class="kpi-label fade" data-i18n="kpi3">App Store approval rate</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="contact-bar">
+    <a href="mailto:geremias@email.com">geremias@email.com</a>
+    <span class="dot">·</span>
+    <a href="https://github.com/geremias" target="_blank">github.com/geremias</a>
+    <span class="dot">·</span>
+    <a href="https://linkedin.com/in/geremias" target="_blank">linkedin.com/in/geremias</a>
+    <span class="dot">·</span>
+    <span class="fade" data-i18n="location">México · Open to remote / relocation</span>
+  </div>
+
+  <section>
+    <p class="section-label fade" data-i18n="skillsLabel">Core Competencies</p>
+    <div class="skills-grid">
+      <div class="skill-block">
+        <p class="skill-block-title fade" data-i18n="sk1">Backend Engineering</p>
+        <div class="skill-tags">
+          <span class="tag hot">Laravel 10+</span>
+          <span class="tag hot">CakePHP</span>
+          <span class="tag">RESTful APIs</span>
+          <span class="tag">Cryptography</span>
+          <span class="tag">Auth0 / JWT</span>
+          <span class="tag">WebSockets</span>
+          <span class="tag fade" data-i18n="tagQueue">Queue Systems</span>
+          <span class="tag">PHP 8+</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <p class="skill-block-title fade" data-i18n="sk2">Frontend &amp; UI/UX</p>
+        <div class="skill-tags">
+          <span class="tag hot">TypeScript</span>
+          <span class="tag hot">Angular</span>
+          <span class="tag">Vue.js</span>
+          <span class="tag">Livewire + Vite</span>
+          <span class="tag">Blade</span>
+          <span class="tag">jQuery</span>
+          <span class="tag fade" data-i18n="tagDesign">UX/UI Design</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <p class="skill-block-title fade" data-i18n="sk3">Mobile Engineering</p>
+        <div class="skill-tags">
+          <span class="tag hot">Ionic + Capacitor</span>
+          <span class="tag hot">Angular</span>
+          <span class="tag">React Native</span>
+          <span class="tag">Kotlin</span>
+          <span class="tag fade" data-i18n="tagIAP">In-App Purchases</span>
+          <span class="tag fade" data-i18n="tagPush">Push Notifications</span>
+          <span class="tag">Geofencing</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <p class="skill-block-title fade" data-i18n="sk4">Cloud &amp; Infrastructure</p>
+        <div class="skill-tags">
+          <span class="tag hot">AWS Lambda</span>
+          <span class="tag hot">Amazon Connect</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">Google Cloud Platform</span>
+          <span class="tag">AWS Rekognition / OCR</span>
+          <span class="tag">Twilio</span>
+          <span class="tag">SparkPost</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <p class="skill-block-title fade" data-i18n="sk5">Data &amp; Storage</p>
+        <div class="skill-tags">
+          <span class="tag hot">MySQL</span>
+          <span class="tag hot">PostgreSQL</span>
+          <span class="tag">Firebase Realtime DB</span>
+          <span class="tag">Firestore</span>
+          <span class="tag fade" data-i18n="tagQuery">Query Optimization</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <p class="skill-block-title fade" data-i18n="sk6">Integrations &amp; APIs</p>
+        <div class="skill-tags">
+          <span class="tag hot">Google Maps / Geocoding</span>
+          <span class="tag">Twilio WhatsApp</span>
+          <span class="tag">SMS Gateway (LabsMobile)</span>
+          <span class="tag fade" data-i18n="tagPhone">Phone Validation</span>
+          <span class="tag">OAuth 2.0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label fade" data-i18n="expLabel">Professional Experience</p>
+    <div class="exp-item">
+      <div>
+        <p class="exp-role fade" data-i18n="expRole">Senior Full-Stack Engineer &amp; Mobile Architect</p>
+        <p class="exp-company fade" data-i18n="expCompany">Enterprise Software Projects — Mexico</p>
+      </div>
+      <p class="exp-years fade" data-i18n="expYears">2012 — Present</p>
+      <ul class="exp-bullets">
+        <li class="fade" data-i18n="b1">Architected and delivered <strong>high-demand web portals</strong> using Laravel, handling thousands of concurrent users with zero-downtime deployments and optimized query pipelines on PostgreSQL and MySQL.</li>
+        <li class="fade" data-i18n="b2">Designed end-to-end <strong>automated recruitment contact centers</strong> on Amazon Connect, configuring Contact Flows and AWS Lambda functions to orchestrate candidate screening via voice, SMS, and WhatsApp — reducing manual recruiter workload by over 60%.</li>
+        <li class="fade" data-i18n="b3">Built and launched <strong>40+ iOS and Android hybrid applications</strong> using Ionic + Angular + Capacitor. Maintained a near-100% App Store / Google Play approval rate by proactively resolving reviewer observations across submission cycles.</li>
+        <li class="fade" data-i18n="b4">Integrated <strong>native In-App Purchase flows</strong> (StoreKit 2 / Google Play Billing) on both platforms, including subscription management, receipt validation, and sandbox testing pipelines.</li>
+        <li class="fade" data-i18n="b5">Implemented <strong>Geofencing and real-time GPS tracking</strong> via Google Maps Platform, powering delivery-tracking and field-operations apps with sub-second location accuracy.</li>
+        <li class="fade" data-i18n="b6">Engineered <strong>OCR document processing pipelines</strong> on AWS, extracting and structuring data from identity documents and forms at scale, feeding downstream validation workflows.</li>
+        <li class="fade" data-i18n="b7">Developed enterprise-grade <strong>school management systems and administrative ERPs</strong> with multi-role access control, cryptographic data protection, and complex algorithmic selection processes.</li>
+        <li class="fade" data-i18n="b8">Built and deployed <strong>omnichannel messaging systems</strong> orchestrating Twilio (SMS + WhatsApp), SparkPost (bulk email), and LabsMobile — processing hundreds of thousands of notifications monthly.</li>
+        <li class="fade" data-i18n="b9">Led frontend engineering using TypeScript, Angular, and Vue.js alongside real-time WebSocket dashboards, delivering rich UX/UI experiences backed by deep product design knowledge.</li>
+        <li class="fade" data-i18n="b10">Developed a <strong>cross-platform mobile game</strong> with React Native and shipped production <strong>Android applications</strong> in Kotlin with native performance optimizations.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label fade" data-i18n="mobileLabel">Mobile App Portfolio — 40+ Published Apps</p>
+    <p class="fade" style="font-size:14px; color:var(--ink2); line-height:1.7; max-width:680px;" data-i18n="mobileDesc">Spanning both App Store and Google Play, with a consistent near-100% approval rate. Application categories include:</p>
+    <div class="apps-strip">
+      <span class="app-pill fade" data-i18n="pill1">Point of Sale</span>
+      <span class="app-pill fade" data-i18n="pill2">Product Catalogs</span>
+      <span class="app-pill fade" data-i18n="pill3">Order Tracking</span>
+      <span class="app-pill fade" data-i18n="pill4">Field Data Capture</span>
+      <span class="app-pill fade" data-i18n="pill5">Maps &amp; Geofencing</span>
+      <span class="app-pill fade" data-i18n="pill6">In-App Purchases</span>
+      <span class="app-pill fade" data-i18n="pill7">Push Notifications</span>
+      <span class="app-pill fade" data-i18n="pill8">Mobile Gaming</span>
+      <span class="app-pill fade" data-i18n="pill9">Recruitment Tools</span>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label fade" data-i18n="cloudLabel">Cloud Platforms &amp; Services</p>
+    <div class="cloud-grid">
+      <div class="cloud-item">
+        <strong>Amazon Web Services</strong>
+        <span>Lambda · Amazon Connect · Contact Flows · Rekognition (OCR) · S3 · API Gateway</span>
+      </div>
+      <div class="cloud-item">
+        <strong>Google Cloud Platform</strong>
+        <span>Firebase Auth · Firestore · Realtime DB · Cloud Messaging (FCM) · Maps Platform · Geocoding API</span>
+      </div>
+      <div class="cloud-item">
+        <strong class="fade" data-i18n="commLabel">Communications</strong>
+        <span>Twilio SMS · Twilio WhatsApp Business · SparkPost Bulk Email · LabsMobile SMS · Phone Validation APIs</span>
+      </div>
+      <div class="cloud-item">
+        <strong class="fade" data-i18n="authLabel">Auth &amp; Security</strong>
+        <span>Auth0 · JWT · OAuth 2.0 · Encryption at rest · Cryptographic data protection</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label fade" data-i18n="eduLabel">Education</p>
+    <div class="edu-row">
+      <div>
+        <p class="edu-degree fade" data-i18n="eduDegree">B.Sc. in Computer Science</p>
+        <p class="edu-school">Instituto Tecnológico de Chetumal</p>
+      </div>
+      <p class="edu-year">2013</p>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>geremias.marquez — Full-Stack · Mobile · Cloud</span>
+    <span class="fade" data-i18n="footerRemote">Open to remote opportunities in Mexico &amp; the United States</span>
+  </div>
+
+</div>
+
+<script>
+const T = {
+  en: {
+    tagline: "Senior Full-Stack Engineer · Mobile Architect · Cloud Specialist",
+    heroSub: "12+ years engineering high-availability platforms, enterprise-grade mobile ecosystems, and cloud-native automation at scale.",
+    kpi1: "Years in production", kpi2: "Apps shipped", kpi3: "App Store approval rate",
+    location: "México · Open to remote / relocation",
+    skillsLabel: "Core Competencies",
+    sk1: "Backend Engineering", sk2: "Frontend &amp; UI/UX", sk3: "Mobile Engineering",
+    sk4: "Cloud &amp; Infrastructure", sk5: "Data &amp; Storage", sk6: "Integrations &amp; APIs",
+    tagQueue: "Queue Systems", tagDesign: "UX/UI Design", tagIAP: "In-App Purchases",
+    tagPush: "Push Notifications", tagQuery: "Query Optimization", tagPhone: "Phone Validation",
+    expLabel: "Professional Experience",
+    expRole: "Senior Full-Stack Engineer &amp; Mobile Architect",
+    expCompany: "Enterprise Software Projects — Mexico",
+    expYears: "2012 — Present",
+    b1: "Architected and delivered <strong>high-demand web portals</strong> using Laravel, handling thousands of concurrent users with zero-downtime deployments and optimized query pipelines on PostgreSQL and MySQL.",
+    b2: "Designed end-to-end <strong>automated recruitment contact centers</strong> on Amazon Connect, configuring Contact Flows and AWS Lambda functions to orchestrate candidate screening via voice, SMS, and WhatsApp — reducing manual recruiter workload by over 60%.",
+    b3: "Built and launched <strong>40+ iOS and Android hybrid applications</strong> using Ionic + Angular + Capacitor. Maintained a near-100% App Store / Google Play approval rate by proactively resolving reviewer observations across submission cycles.",
+    b4: "Integrated <strong>native In-App Purchase flows</strong> (StoreKit 2 / Google Play Billing) on both platforms, including subscription management, receipt validation, and sandbox testing pipelines.",
+    b5: "Implemented <strong>Geofencing and real-time GPS tracking</strong> via Google Maps Platform, powering delivery-tracking and field-operations apps with sub-second location accuracy.",
+    b6: "Engineered <strong>OCR document processing pipelines</strong> on AWS, extracting and structuring data from identity documents and forms at scale, feeding downstream validation workflows.",
+    b7: "Developed enterprise-grade <strong>school management systems and administrative ERPs</strong> with multi-role access control, cryptographic data protection, and complex algorithmic selection processes.",
+    b8: "Built and deployed <strong>omnichannel messaging systems</strong> orchestrating Twilio (SMS + WhatsApp), SparkPost (bulk email), and LabsMobile — processing hundreds of thousands of notifications monthly.",
+    b9: "Led frontend engineering using TypeScript, Angular, and Vue.js alongside real-time WebSocket dashboards, delivering rich UX/UI experiences backed by deep product design knowledge.",
+    b10: "Developed a <strong>cross-platform mobile game</strong> with React Native and shipped production <strong>Android applications</strong> in Kotlin with native performance optimizations.",
+    mobileLabel: "Mobile App Portfolio — 40+ Published Apps",
+    mobileDesc: "Spanning both App Store and Google Play, with a consistent near-100% approval rate. Application categories include:",
+    pill1: "Point of Sale", pill2: "Product Catalogs", pill3: "Order Tracking",
+    pill4: "Field Data Capture", pill5: "Maps &amp; Geofencing", pill6: "In-App Purchases",
+    pill7: "Push Notifications", pill8: "Mobile Gaming", pill9: "Recruitment Tools",
+    cloudLabel: "Cloud Platforms &amp; Services",
+    commLabel: "Communications", authLabel: "Auth &amp; Security",
+    eduLabel: "Education", eduDegree: "B.Sc. in Computer Science",
+    footerRemote: "Open to remote opportunities in Mexico &amp; the United States"
+  },
+  es: {
+    tagline: "Ingeniero Full-Stack Senior · Arquitecto Mobile · Especialista Cloud",
+    heroSub: "Más de 12 años diseñando plataformas de alta disponibilidad, ecosistemas móviles empresariales y automatización nativa en la nube a gran escala.",
+    kpi1: "Años en producción", kpi2: "Apps publicadas", kpi3: "Tasa de aprobación App Store",
+    location: "México · Disponible para trabajo remoto / reubicación",
+    skillsLabel: "Competencias Principales",
+    sk1: "Ingeniería Backend", sk2: "Frontend &amp; UI/UX", sk3: "Ingeniería Mobile",
+    sk4: "Cloud e Infraestructura", sk5: "Datos y Almacenamiento", sk6: "Integraciones y APIs",
+    tagQueue: "Sistemas de Colas", tagDesign: "Diseño UX/UI", tagIAP: "Compras In-App",
+    tagPush: "Notificaciones Push", tagQuery: "Optimización de Consultas", tagPhone: "Validación Telefónica",
+    expLabel: "Experiencia Profesional",
+    expRole: "Ingeniero Full-Stack Senior &amp; Arquitecto Mobile",
+    expCompany: "Proyectos de Software Empresarial — México",
+    expYears: "2012 — Presente",
+    b1: "Diseñó y entregó <strong>portales web de alta demanda</strong> con Laravel, soportando miles de usuarios concurrentes con despliegues sin tiempo de inactividad y pipelines de consulta optimizados en PostgreSQL y MySQL.",
+    b2: "Diseñó <strong>centros de contacto de reclutamiento automatizados</strong> de extremo a extremo en Amazon Connect, configurando Contact Flows y funciones AWS Lambda para orquestar el filtrado de candidatos por voz, SMS y WhatsApp — reduciendo la carga manual de reclutadores en más del 60%.",
+    b3: "Construyó y lanzó <strong>más de 40 aplicaciones híbridas para iOS y Android</strong> con Ionic + Angular + Capacitor. Mantuvo una tasa de aprobación cercana al 100% en App Store y Google Play resolviendo proactivamente las observaciones de revisión.",
+    b4: "Integró <strong>flujos nativos de Compras In-App</strong> (StoreKit 2 / Google Play Billing) en ambas plataformas, incluyendo gestión de suscripciones, validación de recibos y pipelines de prueba en sandbox.",
+    b5: "Implementó <strong>Geocercas y rastreo GPS en tiempo real</strong> mediante Google Maps Platform, impulsando apps de seguimiento de entregas y operaciones en campo con precisión de ubicación por debajo del segundo.",
+    b6: "Desarrolló <strong>pipelines de procesamiento OCR de documentos</strong> en AWS, extrayendo y estructurando datos de documentos de identidad y formularios a escala, alimentando flujos de validación posteriores.",
+    b7: "Desarrolló <strong>sistemas de gestión escolar y ERPs administrativos</strong> de nivel empresarial con control de acceso multirol, protección criptográfica de datos y algoritmos complejos de procesos de selección.",
+    b8: "Construyó y desplegó <strong>sistemas de mensajería omnicanal</strong> orquestando Twilio (SMS + WhatsApp), SparkPost (email masivo) y LabsMobile — procesando cientos de miles de notificaciones mensualmente.",
+    b9: "Lideró la ingeniería frontend con TypeScript, Angular y Vue.js junto a dashboards en tiempo real con WebSockets, entregando experiencias UX/UI enriquecidas respaldadas por profundo conocimiento en diseño de producto.",
+    b10: "Desarrolló un <strong>juego móvil multiplataforma</strong> con React Native y publicó <strong>aplicaciones Android en producción</strong> en Kotlin con optimizaciones de rendimiento nativo.",
+    mobileLabel: "Portafolio Mobile — 40+ Apps Publicadas",
+    mobileDesc: "Distribuidas entre App Store y Google Play, con una tasa de aprobación consistente cercana al 100%. Categorías de aplicaciones:",
+    pill1: "Punto de Venta", pill2: "Catálogos de Productos", pill3: "Seguimiento de Pedidos",
+    pill4: "Captura de Datos en Campo", pill5: "Mapas y Geocercas", pill6: "Compras In-App",
+    pill7: "Notificaciones Push", pill8: "Juegos Móviles", pill9: "Herramientas de Reclutamiento",
+    cloudLabel: "Plataformas Cloud y Servicios",
+    commLabel: "Comunicaciones", authLabel: "Auth y Seguridad",
+    eduLabel: "Educación", eduDegree: "Lic. en Informática",
+    footerRemote: "Disponible para oportunidades remotas en México y Estados Unidos"
+  }
+};
+
+let lang = 'en';
+
+function setLang(l) {
+  if (l === lang) return;
+  lang = l;
+  document.body.classList.add('lang-switching');
+  setTimeout(() => {
+    const t = T[l];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (t[k] !== undefined) el.innerHTML = t[k];
+    });
+    document.documentElement.lang = l;
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    document.getElementById('btn-es').classList.toggle('active', l === 'es');
+    document.body.classList.remove('lang-switching');
+  }, 150);
+}
+</script>
 </body>
 </html>
