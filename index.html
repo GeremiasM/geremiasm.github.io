@@ -1,627 +1,1104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geremias Marquez — Senior Full-Stack Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geremias Marquez Matias | Senior Full-Stack Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  :root {
-    --ink: #0d0d0d;
-    --ink2: #3a3a3a;
-    --ink3: #6b6b6b;
-    --paper: #f8f6f1;
-    --accent: #c8410a;
-    --accent2: #1a5c3a;
-    --line: rgba(13,13,13,0.12);
-    --mono: 'DM Mono', monospace;
-    --display: 'Syne', sans-serif;
-    --serif: 'Instrument Serif', serif;
-  }
+    :root {
+      --bg: #eef3f8;
+      --surface: #ffffff;
+      --surface-soft: #f7fafc;
+      --text: #0f172a;
+      --muted: #526176;
+      --line: #d6dfeb;
+      --primary: #0f766e;
+      --primary-strong: #0c5f5a;
+      --accent: #c2410c;
+      --accent-soft: #fff2e7;
+      --ok: #166534;
+      --ok-soft: #ecfdf3;
+      --mono: "JetBrains Mono", monospace;
+      --sans: "Inter", sans-serif;
+      --radius: 8px;
+      --shadow: 0 20px 48px rgba(15, 23, 42, 0.08);
+    }
 
-  html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--display);
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+    body {
+      background: linear-gradient(180deg, #f4f8fc 0%, var(--bg) 100%);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
-  /* LANG BAR */
-  .lang-bar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0.6rem 2rem;
-  }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  .lang-toggle {
-    display: flex;
-    border: 1px solid var(--line);
-    overflow: hidden;
-  }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(244, 248, 252, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+    }
 
-  .lang-btn {
-    padding: 5px 16px;
-    cursor: pointer;
-    border: none;
-    border-right: 1px solid var(--line);
-    background: transparent;
-    color: var(--ink3);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: background 0.15s, color 0.15s;
-  }
+    .topbar-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
-  .lang-btn:last-child { border-right: none; }
-  .lang-btn.active { background: var(--ink); color: var(--paper); }
-  .lang-btn:hover:not(.active) { background: rgba(13,13,13,0.06); color: var(--ink); }
+    .brand-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
 
-  /* LAYOUT */
-  .page { max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem; }
+    .brand-status {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
 
-  /* HERO */
-  .hero {
-    padding: 4rem 0 3rem;
-    border-bottom: 1px solid var(--line);
-    position: relative;
-    overflow: hidden;
-  }
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      flex-shrink: 0;
+    }
 
-  .hero::before {
-    content: 'GMM';
-    position: absolute;
-    right: -0.05em;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: clamp(120px, 20vw, 200px);
-    font-weight: 800;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(13,13,13,0.06);
-    pointer-events: none;
-    line-height: 1;
-  }
+    .lang-btn {
+      border: 0;
+      padding: 0.42rem 0.82rem;
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
 
-  .tag-line {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
+    .lang-btn.active {
+      background: var(--text);
+      color: var(--surface);
+    }
 
-  h1 {
-    font-size: clamp(42px, 8vw, 76px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.25rem;
-  }
+    .page {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
 
-  h1 span { color: var(--accent); }
+    .hero {
+      padding: 3.5rem 0 2rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.25rem;
+      align-items: center;
+    }
 
-  .hero-sub {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: clamp(18px, 2.5vw, 22px);
-    color: var(--ink2);
-    max-width: 560px;
-    line-height: 1.5;
-    margin-bottom: 2rem;
-  }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
 
-  .kpi-row { display: flex; gap: 2.5rem; flex-wrap: wrap; }
-  .kpi { display: flex; flex-direction: column; }
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 4.1rem);
+      line-height: 1.06;
+      font-weight: 800;
+      max-width: 13ch;
+    }
 
-  .kpi-num { font-size: 36px; font-weight: 800; line-height: 1; color: var(--ink); }
-  .kpi-num span { color: var(--accent); }
+    .hero-role {
+      margin-top: 1rem;
+      font-size: clamp(1.08rem, 1.7vw, 1.35rem);
+      font-weight: 600;
+      color: var(--primary);
+      max-width: 36ch;
+      line-height: 1.45;
+    }
 
-  .kpi-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--ink3);
-    text-transform: uppercase;
-    margin-top: 3px;
-  }
+    .hero-lead {
+      margin-top: 1rem;
+      max-width: 58ch;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
 
-  /* CONTACT BAR */
-  .contact-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink3);
-  }
+    .hero-actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
 
-  .contact-bar a { color: var(--ink2); text-decoration: none; transition: color 0.2s; }
-  .contact-bar a:hover { color: var(--accent); }
-  .contact-bar .dot { color: rgba(13,13,13,0.2); }
+    .btn {
+      border-radius: var(--radius);
+      padding: 0.7rem 1rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid transparent;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
 
-  /* SECTION */
-  section { padding: 3rem 0; border-bottom: 1px solid var(--line); }
+    .btn [data-lucide] {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2px;
+    }
 
-  .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 300;
-    letter-spacing: 0.25em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--surface);
+    }
 
-  /* SKILLS GRID */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-  }
+    .btn-primary:hover {
+      background: var(--primary-strong);
+      box-shadow: 0 8px 22px rgba(15, 118, 110, 0.24);
+      transform: translateY(-1px);
+    }
 
-  .skill-block { background: var(--paper); padding: 1.25rem 1.5rem; }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--line);
+    }
 
-  .skill-block-title {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-bottom: 0.75rem;
-  }
+    .btn-secondary:hover {
+      background: var(--surface-soft);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      transform: translateY(-1px);
+    }
 
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .hero-trust {
+      margin-top: 1.2rem;
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      max-width: 760px;
+    }
 
-  .tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 3px 10px;
-    border: 1px solid var(--line);
-    color: var(--ink2);
-    background: transparent;
-  }
+    .hero-trust li {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      min-height: 48px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
 
-  .tag.hot { border-color: var(--accent); color: var(--accent); }
+    .hero-trust [data-lucide] {
+      width: 15px;
+      height: 15px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
 
-  /* EXPERIENCE */
-  .exp-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.5rem 2rem;
-    margin-bottom: 2.5rem;
-  }
+    .hero-visual {
+      position: relative;
+      min-height: 400px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
 
-  .exp-item:last-child { margin-bottom: 0; }
-  .exp-role { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-  .exp-company {
-    font-family: var(--serif);
-    font-style: italic;
-    color: var(--accent2);
-    font-size: 15px;
-    margin: 2px 0 10px;
-  }
+    .visual-badges {
+      position: absolute;
+      right: 0.85rem;
+      bottom: 0.85rem;
+      display: grid;
+      gap: 0.5rem;
+    }
 
-  .exp-years {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink3);
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    padding-top: 4px;
-  }
+    .visual-badge {
+      background: rgba(15, 23, 42, 0.88);
+      color: #f8fafc;
+      border-radius: var(--radius);
+      padding: 0.6rem 0.72rem;
+      min-width: 220px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-  .exp-bullets { list-style: none; grid-column: 1 / -1; }
+    .visual-badge strong {
+      display: block;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      font-weight: 600;
+    }
 
-  .exp-bullets li {
-    font-size: 14px;
-    color: var(--ink2);
-    line-height: 1.65;
-    padding: 5px 0 5px 1.1rem;
-    border-top: 1px solid var(--line);
-    position: relative;
-  }
+    .visual-badge span {
+      display: block;
+      margin-top: 0.2rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: #cbd5e1;
+    }
 
-  .exp-bullets li::before {
-    content: '\2192';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-size: 12px;
-    top: 7px;
-  }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.7rem;
+    }
 
-  /* APPS STRIP */
-  .apps-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 1rem;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-  .app-pill {
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 5px 14px;
-    background: var(--ink);
-    color: var(--paper);
-    letter-spacing: 0.05em;
-  }
+    .metric-value {
+      font-size: clamp(1.55rem, 2.5vw, 2rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.15;
+    }
 
-  /* CLOUD GRID */
-  .cloud-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    margin-top: 1.5rem;
-  }
+    .metric-label {
+      margin-top: 0.4rem;
+      font-size: 0.84rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
 
-  .cloud-item { background: var(--paper); padding: 1rem 1.25rem; font-size: 13px; }
+    section {
+      padding: 3.1rem 0;
+      border-top: 1px solid var(--line);
+    }
 
-  .cloud-item strong {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-bottom: 6px;
-  }
+    .section-kicker {
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
 
-  .cloud-item span {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink2);
-    line-height: 1.8;
-  }
+    .section-title {
+      margin-top: 0.7rem;
+      font-size: clamp(1.45rem, 2.8vw, 2.05rem);
+      line-height: 1.25;
+      font-weight: 700;
+      max-width: 26ch;
+    }
 
-  /* EDUCATION */
-  .edu-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+    .section-copy {
+      margin-top: 0.8rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 74ch;
+    }
 
-  .edu-degree { font-size: 20px; font-weight: 700; }
-  .edu-school { font-family: var(--serif); font-style: italic; color: var(--ink3); font-size: 15px; }
-  .edu-year { font-family: var(--mono); font-size: 11px; color: var(--ink3); }
+    .services-grid {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
 
-  /* FOOTER */
-  .footer {
-    padding: 2rem 0 0;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink3);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    border-bottom: none;
-  }
+    .service-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 1rem;
+      min-height: 190px;
+    }
 
-  /* TRANSITION */
-  .fade { transition: opacity 0.15s ease; }
-  body.lang-switching .fade { opacity: 0; }
+    .service-card [data-lucide] {
+      width: 18px;
+      height: 18px;
+      color: var(--primary);
+      margin-bottom: 0.65rem;
+    }
 
-  /* PRINT */
-  @media print {
-    body { background: white; }
-    .hero::before { display: none; }
-    .lang-bar { display: none; }
-  }
+    .service-card h3 {
+      font-size: 1rem;
+      line-height: 1.35;
+    }
 
-  @media (max-width: 600px) {
-    .page { padding: 0 1.25rem 4rem; }
-    .lang-bar { padding: 0.6rem 1.25rem; }
-    .hero { padding: 2.5rem 0 2rem; }
-    .kpi-row { gap: 1.5rem; }
-    .exp-item { grid-template-columns: 1fr; }
-    .exp-years { padding-top: 0; }
-  }
-</style>
+    .service-card p {
+      margin-top: 0.6rem;
+      color: var(--muted);
+      line-height: 1.68;
+      font-size: 0.93rem;
+    }
+
+    .results-grid {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem;
+      min-height: 170px;
+    }
+
+    .result-head {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .result-title {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .result-desc {
+      margin-top: 0.5rem;
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 0.88rem;
+    }
+
+    .experience-grid {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.7rem 2rem;
+      align-items: start;
+    }
+
+    .exp-role {
+      font-size: 1.12rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .exp-company {
+      margin-top: 0.35rem;
+      color: var(--primary);
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      white-space: nowrap;
+    }
+
+    .exp-list {
+      list-style: none;
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
+    }
+
+    .exp-list li {
+      border-top: 1px solid var(--line);
+      padding: 0.8rem 0 0.8rem 0;
+      color: var(--muted);
+      line-height: 1.72;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+    }
+
+    .exp-list [data-lucide] {
+      width: 14px;
+      height: 14px;
+      color: var(--ok);
+      margin-top: 0.26rem;
+      flex-shrink: 0;
+    }
+
+    .stack-layout {
+      margin-top: 1.45rem;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 1rem;
+    }
+
+    .stack-panel,
+    .fit-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 1rem;
+    }
+
+    .panel-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-title [data-lucide] {
+      width: 16px;
+      height: 16px;
+      color: var(--primary);
+    }
+
+    .stack-group {
+      margin-bottom: 0.9rem;
+    }
+
+    .stack-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .stack-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+      text-transform: uppercase;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.28rem 0.58rem;
+      background: var(--surface-soft);
+      font-size: 0.74rem;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    .fit-list {
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .fit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .fit-list [data-lucide] {
+      width: 14px;
+      height: 14px;
+      color: var(--ok);
+      margin-top: 0.28rem;
+      flex-shrink: 0;
+    }
+
+    .contact-band {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--line);
+      padding-top: 2.5rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-title {
+      font-size: clamp(1.25rem, 2.4vw, 1.95rem);
+      line-height: 1.25;
+      max-width: 30ch;
+    }
+
+    .contact-copy {
+      margin-top: 0.7rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .contact-link {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 0.6rem 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.46rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .contact-link:hover {
+      background: var(--surface-soft);
+      color: var(--text);
+    }
+
+    .contact-link [data-lucide] {
+      width: 15px;
+      height: 15px;
+      color: var(--primary);
+    }
+
+    .footer-note {
+      margin-top: 1.4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .fade {
+      transition: opacity 0.15s ease;
+    }
+
+    body.lang-switching .fade {
+      opacity: 0;
+    }
+
+    @media (max-width: 1030px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 320px;
+      }
+
+      .hero-trust {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .services-grid,
+      .results-grid,
+      .stack-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar-inner,
+      .page {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .exp-period {
+        margin-top: 0;
+      }
+
+      .visual-badge {
+        min-width: 0;
+      }
+
+      .contact-band {
+        padding-top: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="lang-bar">
-  <div class="lang-toggle" role="group" aria-label="Language / Idioma">
-    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
-  </div>
-</div>
-
-<div class="page">
-
-  <header class="hero">
-    <p class="tag-line fade" data-i18n="tagline">Senior Full-Stack Engineer · Mobile Architect · Cloud Specialist</p>
-    <h1>Geremias<br><span>Marquez</span><br>Matias</h1>
-    <p class="hero-sub fade" data-i18n="heroSub">12+ years engineering high-availability platforms, enterprise-grade mobile ecosystems, and cloud-native automation at scale.</p>
-    <div class="kpi-row">
-      <div class="kpi">
-        <span class="kpi-num">12<span>+</span></span>
-        <span class="kpi-label fade" data-i18n="kpi1">Years in production</span>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <p class="brand-name">Geremias Marquez Matias</p>
+        <p class="brand-status fade" data-i18n="topStatus">Senior Full-Stack Engineer · Mobile Architect · Cloud Specialist</p>
       </div>
-      <div class="kpi">
-        <span class="kpi-num">40<span>+</span></span>
-        <span class="kpi-label fade" data-i18n="kpi2">Apps shipped</span>
-      </div>
-      <div class="kpi">
-        <span class="kpi-num">~100<span>%</span></span>
-        <span class="kpi-label fade" data-i18n="kpi3">App Store approval rate</span>
+      <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
       </div>
     </div>
   </header>
 
-  <div class="contact-bar">
-    <a href="mailto:geremias@email.com">geremias@email.com</a>
-    <span class="dot">·</span>
-    <a href="https://github.com/geremias" target="_blank">github.com/geremias</a>
-    <span class="dot">·</span>
-    <a href="https://linkedin.com/in/geremias" target="_blank">linkedin.com/in/geremias</a>
-    <span class="dot">·</span>
-    <span class="fade" data-i18n="location">México · Open to remote / relocation</span>
-  </div>
-
-  <section>
-    <p class="section-label fade" data-i18n="skillsLabel">Core Competencies</p>
-    <div class="skills-grid">
-      <div class="skill-block">
-        <p class="skill-block-title fade" data-i18n="sk1">Backend Engineering</p>
-        <div class="skill-tags">
-          <span class="tag hot">Laravel 10+</span>
-          <span class="tag hot">CakePHP</span>
-          <span class="tag">RESTful APIs</span>
-          <span class="tag">Cryptography</span>
-          <span class="tag">Auth0 / JWT</span>
-          <span class="tag">WebSockets</span>
-          <span class="tag fade" data-i18n="tagQueue">Queue Systems</span>
-          <span class="tag">PHP 8+</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-block-title fade" data-i18n="sk2">Frontend &amp; UI/UX</p>
-        <div class="skill-tags">
-          <span class="tag hot">TypeScript</span>
-          <span class="tag hot">Angular</span>
-          <span class="tag">Vue.js</span>
-          <span class="tag">Livewire + Vite</span>
-          <span class="tag">Blade</span>
-          <span class="tag">jQuery</span>
-          <span class="tag fade" data-i18n="tagDesign">UX/UI Design</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-block-title fade" data-i18n="sk3">Mobile Engineering</p>
-        <div class="skill-tags">
-          <span class="tag hot">Ionic + Capacitor</span>
-          <span class="tag hot">Angular</span>
-          <span class="tag">React Native</span>
-          <span class="tag">Kotlin</span>
-          <span class="tag fade" data-i18n="tagIAP">In-App Purchases</span>
-          <span class="tag fade" data-i18n="tagPush">Push Notifications</span>
-          <span class="tag">Geofencing</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-block-title fade" data-i18n="sk4">Cloud &amp; Infrastructure</p>
-        <div class="skill-tags">
-          <span class="tag hot">AWS Lambda</span>
-          <span class="tag hot">Amazon Connect</span>
-          <span class="tag">Firebase</span>
-          <span class="tag">Google Cloud Platform</span>
-          <span class="tag">AWS Rekognition / OCR</span>
-          <span class="tag">Twilio</span>
-          <span class="tag">SparkPost</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-block-title fade" data-i18n="sk5">Data &amp; Storage</p>
-        <div class="skill-tags">
-          <span class="tag hot">MySQL</span>
-          <span class="tag hot">PostgreSQL</span>
-          <span class="tag">Firebase Realtime DB</span>
-          <span class="tag">Firestore</span>
-          <span class="tag fade" data-i18n="tagQuery">Query Optimization</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-block-title fade" data-i18n="sk6">Integrations &amp; APIs</p>
-        <div class="skill-tags">
-          <span class="tag hot">Google Maps / Geocoding</span>
-          <span class="tag">Twilio WhatsApp</span>
-          <span class="tag">SMS Gateway (LabsMobile)</span>
-          <span class="tag fade" data-i18n="tagPhone">Phone Validation</span>
-          <span class="tag">OAuth 2.0</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <p class="section-label fade" data-i18n="expLabel">Professional Experience</p>
-    <div class="exp-item">
+  <main class="page">
+    <section class="hero">
       <div>
-        <p class="exp-role fade" data-i18n="expRole">Senior Full-Stack Engineer &amp; Mobile Architect</p>
-        <p class="exp-company fade" data-i18n="expCompany">Enterprise Software Projects — Mexico</p>
+        <p class="eyebrow fade" data-i18n="heroEyebrow">Premium software execution for growth-stage and enterprise teams</p>
+        <h1>Geremias Marquez Matias</h1>
+        <p class="hero-role fade" data-i18n="heroRole">I build revenue-critical platforms, mobile products, and cloud automation with measurable business impact.</p>
+        <p class="hero-lead fade" data-i18n="heroLead">For 12+ years I have shipped high-availability products across web and mobile, led complex technical decisions, and delivered stable releases for teams that cannot afford downtime, delivery drift, or low engineering standards.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="mailto:geremias@email.com">
+            <i data-lucide="mail"></i>
+            <span class="fade" data-i18n="ctaPrimary">Book a discovery call</span>
+          </a>
+          <a class="btn btn-secondary" href="#experience">
+            <i data-lucide="arrow-right"></i>
+            <span class="fade" data-i18n="ctaSecondary">Review experience</span>
+          </a>
+        </div>
+        <ul class="hero-trust">
+          <li>
+            <i data-lucide="globe"></i>
+            <span class="fade" data-i18n="trust1">Bilingual delivery: English and Spanish</span>
+          </li>
+          <li>
+            <i data-lucide="clock"></i>
+            <span class="fade" data-i18n="trust2">Mexico and U.S. time-zone coverage</span>
+          </li>
+          <li>
+            <i data-lucide="shield"></i>
+            <span class="fade" data-i18n="trust3">Selective client load for focused execution</span>
+          </li>
+        </ul>
       </div>
-      <p class="exp-years fade" data-i18n="expYears">2012 — Present</p>
-      <ul class="exp-bullets">
-        <li class="fade" data-i18n="b1">Architected and delivered <strong>high-demand web portals</strong> using Laravel, handling thousands of concurrent users with zero-downtime deployments and optimized query pipelines on PostgreSQL and MySQL.</li>
-        <li class="fade" data-i18n="b2">Designed end-to-end <strong>automated recruitment contact centers</strong> on Amazon Connect, configuring Contact Flows and AWS Lambda functions to orchestrate candidate screening via voice, SMS, and WhatsApp — reducing manual recruiter workload by over 60%.</li>
-        <li class="fade" data-i18n="b3">Built and launched <strong>40+ iOS and Android hybrid applications</strong> using Ionic + Angular + Capacitor. Maintained a near-100% App Store / Google Play approval rate by proactively resolving reviewer observations across submission cycles.</li>
-        <li class="fade" data-i18n="b4">Integrated <strong>native In-App Purchase flows</strong> (StoreKit 2 / Google Play Billing) on both platforms, including subscription management, receipt validation, and sandbox testing pipelines.</li>
-        <li class="fade" data-i18n="b5">Implemented <strong>Geofencing and real-time GPS tracking</strong> via Google Maps Platform, powering delivery-tracking and field-operations apps with sub-second location accuracy.</li>
-        <li class="fade" data-i18n="b6">Engineered <strong>OCR document processing pipelines</strong> on AWS, extracting and structuring data from identity documents and forms at scale, feeding downstream validation workflows.</li>
-        <li class="fade" data-i18n="b7">Developed enterprise-grade <strong>school management systems and administrative ERPs</strong> with multi-role access control, cryptographic data protection, and complex algorithmic selection processes.</li>
-        <li class="fade" data-i18n="b8">Built and deployed <strong>omnichannel messaging systems</strong> orchestrating Twilio (SMS + WhatsApp), SparkPost (bulk email), and LabsMobile — processing hundreds of thousands of notifications monthly.</li>
-        <li class="fade" data-i18n="b9">Led frontend engineering using TypeScript, Angular, and Vue.js alongside real-time WebSocket dashboards, delivering rich UX/UI experiences backed by deep product design knowledge.</li>
-        <li class="fade" data-i18n="b10">Developed a <strong>cross-platform mobile game</strong> with React Native and shipped production <strong>Android applications</strong> in Kotlin with native performance optimizations.</li>
-      </ul>
-    </div>
-  </section>
 
-  <section>
-    <p class="section-label fade" data-i18n="mobileLabel">Mobile App Portfolio — 40+ Published Apps</p>
-    <p class="fade" style="font-size:14px; color:var(--ink2); line-height:1.7; max-width:680px;" data-i18n="mobileDesc">Spanning both App Store and Google Play, with a consistent near-100% approval rate. Application categories include:</p>
-    <div class="apps-strip">
-      <span class="app-pill fade" data-i18n="pill1">Point of Sale</span>
-      <span class="app-pill fade" data-i18n="pill2">Product Catalogs</span>
-      <span class="app-pill fade" data-i18n="pill3">Order Tracking</span>
-      <span class="app-pill fade" data-i18n="pill4">Field Data Capture</span>
-      <span class="app-pill fade" data-i18n="pill5">Maps &amp; Geofencing</span>
-      <span class="app-pill fade" data-i18n="pill6">In-App Purchases</span>
-      <span class="app-pill fade" data-i18n="pill7">Push Notifications</span>
-      <span class="app-pill fade" data-i18n="pill8">Mobile Gaming</span>
-      <span class="app-pill fade" data-i18n="pill9">Recruitment Tools</span>
-    </div>
-  </section>
+      <div class="hero-visual">
+        <img src="https://images.pexels.com/photos/16129724/pexels-photo-16129724.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" alt="Developer workstation with coding screens" data-i18n-attr="alt:heroImageAlt">
+        <div class="visual-badges">
+          <div class="visual-badge">
+            <strong class="fade" data-i18n="badge1Title">Executive-level communication</strong>
+            <span class="fade" data-i18n="badge1Sub">Technical depth without business ambiguity</span>
+          </div>
+          <div class="visual-badge">
+            <strong class="fade" data-i18n="badge2Title">Hands-on architecture and delivery</strong>
+            <span class="fade" data-i18n="badge2Sub">From product strategy to production releases</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <p class="section-label fade" data-i18n="cloudLabel">Cloud Platforms &amp; Services</p>
-    <div class="cloud-grid">
-      <div class="cloud-item">
-        <strong>Amazon Web Services</strong>
-        <span>Lambda · Amazon Connect · Contact Flows · Rekognition (OCR) · S3 · API Gateway</span>
-      </div>
-      <div class="cloud-item">
-        <strong>Google Cloud Platform</strong>
-        <span>Firebase Auth · Firestore · Realtime DB · Cloud Messaging (FCM) · Maps Platform · Geocoding API</span>
-      </div>
-      <div class="cloud-item">
-        <strong class="fade" data-i18n="commLabel">Communications</strong>
-        <span>Twilio SMS · Twilio WhatsApp Business · SparkPost Bulk Email · LabsMobile SMS · Phone Validation APIs</span>
-      </div>
-      <div class="cloud-item">
-        <strong class="fade" data-i18n="authLabel">Auth &amp; Security</strong>
-        <span>Auth0 · JWT · OAuth 2.0 · Encryption at rest · Cryptographic data protection</span>
-      </div>
+    <div class="metrics">
+      <article class="metric-card">
+        <p class="metric-value">12+</p>
+        <p class="metric-label fade" data-i18n="metric1Label">Years shipping systems in production</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-value">40+</p>
+        <p class="metric-label fade" data-i18n="metric2Label">Mobile apps published on App Store and Google Play</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-value">~100%</p>
+        <p class="metric-label fade" data-i18n="metric3Label">Store approval track record across release cycles</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-value">60%+</p>
+        <p class="metric-label fade" data-i18n="metric4Label">Recruiter workload reduction through automation</p>
+      </article>
     </div>
-  </section>
 
-  <section>
-    <p class="section-label fade" data-i18n="eduLabel">Education</p>
-    <div class="edu-row">
+    <section>
+      <p class="section-kicker fade" data-i18n="servicesKicker">What I deliver</p>
+      <h2 class="section-title fade" data-i18n="servicesTitle">Senior execution for products that directly impact revenue, operations, and growth.</h2>
+      <p class="section-copy fade" data-i18n="servicesDesc">I collaborate with founders, directors, and product leads who need practical engineering leadership, not over-engineered complexity. The focus is simple: faster delivery, stable systems, and clear business outcomes.</p>
+      <div class="services-grid">
+        <article class="service-card">
+          <i data-lucide="briefcase"></i>
+          <h3 class="fade" data-i18n="svc1Title">Web platforms with enterprise reliability</h3>
+          <p class="fade" data-i18n="svc1Desc">Architecture and implementation of backend services, secure APIs, and operational dashboards with zero-downtime deployment pipelines.</p>
+        </article>
+        <article class="service-card">
+          <i data-lucide="smartphone"></i>
+          <h3 class="fade" data-i18n="svc2Title">Mobile products built for retention</h3>
+          <p class="fade" data-i18n="svc2Desc">Cross-platform iOS and Android delivery with high store compliance, reliable release management, and performance-focused implementation.</p>
+        </article>
+        <article class="service-card">
+          <i data-lucide="cloud"></i>
+          <h3 class="fade" data-i18n="svc3Title">Cloud automation and process orchestration</h3>
+          <p class="fade" data-i18n="svc3Desc">Automated workflows using AWS and communication platforms to remove manual bottlenecks and increase team throughput.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-kicker fade" data-i18n="resultsKicker">Business impact</p>
+      <h2 class="section-title fade" data-i18n="resultsTitle">Documented outcomes from production environments.</h2>
+      <p class="section-copy fade" data-i18n="resultsDesc">These are not prototypes. Each result comes from systems that needed to perform under real user volume and operational pressure.</p>
+      <div class="results-grid">
+        <article class="result-card">
+          <p class="result-head">60%+</p>
+          <p class="result-title fade" data-i18n="result1Title">Reduction in manual recruiting operations</p>
+          <p class="result-desc fade" data-i18n="result1Desc">Automated contact-center flows with Amazon Connect, Lambda, voice, SMS, and WhatsApp integrations.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-head">40+</p>
+          <p class="result-title fade" data-i18n="result2Title">Published mobile applications</p>
+          <p class="result-desc fade" data-i18n="result2Desc">Shipped apps across retail, operations, geolocation, and in-app purchases with long-term maintenance continuity.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-head">24/7</p>
+          <p class="result-title fade" data-i18n="result3Title">Production reliability standards</p>
+          <p class="result-desc fade" data-i18n="result3Desc">High-demand web platforms designed for uptime, resilient database flows, and predictable release cadence.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience">
+      <p class="section-kicker fade" data-i18n="expKicker">Professional experience</p>
+      <h2 class="section-title fade" data-i18n="expTitle">Senior Full-Stack Engineer and Mobile Architect</h2>
+      <p class="section-copy fade" data-i18n="expSubtitle">Enterprise software delivery with direct ownership of architecture, implementation, QA coordination, and release stability.</p>
+      <div class="experience-grid">
+        <div>
+          <p class="exp-role fade" data-i18n="expRole">Senior Full-Stack Engineer and Mobile Architect</p>
+          <p class="exp-company fade" data-i18n="expCompany">Enterprise software projects · Mexico</p>
+        </div>
+        <p class="exp-period fade" data-i18n="expPeriod">2012 — Present</p>
+        <ul class="exp-list">
+          <li><i data-lucide="check"></i><span class="fade" data-i18n="b1">Designed and delivered high-demand Laravel portals supporting thousands of concurrent users with optimized PostgreSQL and MySQL workloads.</span></li>
+          <li><i data-lucide="check"></i><span class="fade" data-i18n="b2">Built end-to-end recruiting automation on Amazon Connect with Lambda orchestration, reducing manual workload by more than 60%.</span></li>
+          <li><i data-lucide="check"></i><span class="fade" data-i18n="b3">Published and maintained more than 40 hybrid iOS and Android apps using Ionic, Angular, and Capacitor with near-100% store approvals.</span></li>
+          <li><i data-lucide="check"></i><span class="fade" data-i18n="b4">Implemented native in-app purchases, subscription validation, and sandbox testing flows for both Apple and Google ecosystems.</span></li>
+          <li><i data-lucide="check"></i><span class="fade" data-i18n="b5">Engineered OCR and document-processing pipelines on AWS for identity and form validation workflows at scale.</span></li>
+          <li><i data-lucide="check"></i><span class="fade" data-i18n="b6">Integrated omnichannel messaging with Twilio, SparkPost, and LabsMobile, processing high-volume monthly notifications.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-kicker fade" data-i18n="stackKicker">Technology focus</p>
+      <h2 class="section-title fade" data-i18n="stackTitle">Stack selected for delivery speed, scale, and long-term maintainability.</h2>
+      <p class="section-copy fade" data-i18n="stackDesc">I choose technologies based on business fit, team context, and operational sustainability, not trend cycles.</p>
+      <div class="stack-layout">
+        <article class="stack-panel">
+          <p class="panel-title"><i data-lucide="layers"></i><span class="fade" data-i18n="stackPanelTitle">Core stack</span></p>
+          <div class="stack-group">
+            <p class="stack-label fade" data-i18n="sg1">Backend</p>
+            <div class="tags">
+              <span class="tag">Laravel 10+</span>
+              <span class="tag">CakePHP</span>
+              <span class="tag">PHP 8+</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">WebSockets</span>
+              <span class="tag">Auth0 / JWT</span>
+            </div>
+          </div>
+          <div class="stack-group">
+            <p class="stack-label fade" data-i18n="sg2">Frontend and mobile</p>
+            <div class="tags">
+              <span class="tag">TypeScript</span>
+              <span class="tag">Angular</span>
+              <span class="tag">Vue.js</span>
+              <span class="tag">Ionic + Capacitor</span>
+              <span class="tag">React Native</span>
+              <span class="tag">Kotlin</span>
+            </div>
+          </div>
+          <div class="stack-group">
+            <p class="stack-label fade" data-i18n="sg3">Cloud and data</p>
+            <div class="tags">
+              <span class="tag">AWS Lambda</span>
+              <span class="tag">Amazon Connect</span>
+              <span class="tag">Firebase</span>
+              <span class="tag">GCP</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Twilio</span>
+              <span class="tag">SparkPost</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="fit-panel">
+          <p class="panel-title"><i data-lucide="target"></i><span class="fade" data-i18n="fitTitle">Best-fit engagements</span></p>
+          <ul class="fit-list">
+            <li><i data-lucide="check"></i><span class="fade" data-i18n="fit1">Teams with active products where reliability and release quality are non-negotiable.</span></li>
+            <li><i data-lucide="check"></i><span class="fade" data-i18n="fit2">Organizations that need senior execution without hand-holding and without delivery chaos.</span></li>
+            <li><i data-lucide="check"></i><span class="fade" data-i18n="fit3">Projects requiring direct communication with stakeholders and clear technical accountability.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <div class="contact-band">
       <div>
-        <p class="edu-degree fade" data-i18n="eduDegree">B.Sc. in Computer Science</p>
-        <p class="edu-school">Instituto Tecnológico de Chetumal</p>
+        <h2 class="contact-title fade" data-i18n="contactTitle">Need a senior engineer who can execute fast and communicate clearly with leadership?</h2>
+        <p class="contact-copy fade" data-i18n="contactCopy">I work with a limited number of clients to keep delivery quality high. If your product has real users and zero margin for unstable releases, let's discuss scope, constraints, and expected outcomes.</p>
       </div>
-      <p class="edu-year">2013</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:geremias@email.com">
+          <i data-lucide="mail"></i>
+          <span>geremias@email.com</span>
+        </a>
+        <a class="contact-link" href="https://github.com/geremias" target="_blank" rel="noreferrer">
+          <i data-lucide="github"></i>
+          <span>github.com/geremias</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/geremias" target="_blank" rel="noreferrer">
+          <i data-lucide="linkedin"></i>
+          <span>linkedin.com/in/geremias</span>
+        </a>
+      </div>
     </div>
-  </section>
 
-  <div class="footer">
-    <span>geremias.marquez — Full-Stack · Mobile · Cloud</span>
-    <span class="fade" data-i18n="footerRemote">Open to remote opportunities in Mexico &amp; the United States</span>
-  </div>
+    <footer class="footer-note">
+      <span>geremias.marquez · Full-Stack · Mobile · Cloud</span>
+      <span class="fade" data-i18n="footerRemote">Open to remote opportunities in Mexico and the United States</span>
+    </footer>
+  </main>
 
-</div>
+  <script>
+    const T = {
+      en: {
+        topStatus: "Senior Full-Stack Engineer · Mobile Architect · Cloud Specialist",
+        heroEyebrow: "Premium software execution for growth-stage and enterprise teams",
+        heroRole: "I build revenue-critical platforms, mobile products, and cloud automation with measurable business impact.",
+        heroLead: "For 12+ years I have shipped high-availability products across web and mobile, led complex technical decisions, and delivered stable releases for teams that cannot afford downtime, delivery drift, or low engineering standards.",
+        ctaPrimary: "Book a discovery call",
+        ctaSecondary: "Review experience",
+        trust1: "Bilingual delivery: English and Spanish",
+        trust2: "Mexico and U.S. time-zone coverage",
+        trust3: "Selective client load for focused execution",
+        heroImageAlt: "Developer workstation with coding screens",
+        badge1Title: "Executive-level communication",
+        badge1Sub: "Technical depth without business ambiguity",
+        badge2Title: "Hands-on architecture and delivery",
+        badge2Sub: "From product strategy to production releases",
+        metric1Label: "Years shipping systems in production",
+        metric2Label: "Mobile apps published on App Store and Google Play",
+        metric3Label: "Store approval track record across release cycles",
+        metric4Label: "Recruiter workload reduction through automation",
+        servicesKicker: "What I deliver",
+        servicesTitle: "Senior execution for products that directly impact revenue, operations, and growth.",
+        servicesDesc: "I collaborate with founders, directors, and product leads who need practical engineering leadership, not over-engineered complexity. The focus is simple: faster delivery, stable systems, and clear business outcomes.",
+        svc1Title: "Web platforms with enterprise reliability",
+        svc1Desc: "Architecture and implementation of backend services, secure APIs, and operational dashboards with zero-downtime deployment pipelines.",
+        svc2Title: "Mobile products built for retention",
+        svc2Desc: "Cross-platform iOS and Android delivery with high store compliance, reliable release management, and performance-focused implementation.",
+        svc3Title: "Cloud automation and process orchestration",
+        svc3Desc: "Automated workflows using AWS and communication platforms to remove manual bottlenecks and increase team throughput.",
+        resultsKicker: "Business impact",
+        resultsTitle: "Documented outcomes from production environments.",
+        resultsDesc: "These are not prototypes. Each result comes from systems that needed to perform under real user volume and operational pressure.",
+        result1Title: "Reduction in manual recruiting operations",
+        result1Desc: "Automated contact-center flows with Amazon Connect, Lambda, voice, SMS, and WhatsApp integrations.",
+        result2Title: "Published mobile applications",
+        result2Desc: "Shipped apps across retail, operations, geolocation, and in-app purchases with long-term maintenance continuity.",
+        result3Title: "Production reliability standards",
+        result3Desc: "High-demand web platforms designed for uptime, resilient database flows, and predictable release cadence.",
+        expKicker: "Professional experience",
+        expTitle: "Senior Full-Stack Engineer and Mobile Architect",
+        expSubtitle: "Enterprise software delivery with direct ownership of architecture, implementation, QA coordination, and release stability.",
+        expRole: "Senior Full-Stack Engineer and Mobile Architect",
+        expCompany: "Enterprise software projects · Mexico",
+        expPeriod: "2012 — Present",
+        b1: "Designed and delivered high-demand Laravel portals supporting thousands of concurrent users with optimized PostgreSQL and MySQL workloads.",
+        b2: "Built end-to-end recruiting automation on Amazon Connect with Lambda orchestration, reducing manual workload by more than 60%.",
+        b3: "Published and maintained more than 40 hybrid iOS and Android apps using Ionic, Angular, and Capacitor with near-100% store approvals.",
+        b4: "Implemented native in-app purchases, subscription validation, and sandbox testing flows for both Apple and Google ecosystems.",
+        b5: "Engineered OCR and document-processing pipelines on AWS for identity and form validation workflows at scale.",
+        b6: "Integrated omnichannel messaging with Twilio, SparkPost, and LabsMobile, processing high-volume monthly notifications.",
+        stackKicker: "Technology focus",
+        stackTitle: "Stack selected for delivery speed, scale, and long-term maintainability.",
+        stackDesc: "I choose technologies based on business fit, team context, and operational sustainability, not trend cycles.",
+        stackPanelTitle: "Core stack",
+        sg1: "Backend",
+        sg2: "Frontend and mobile",
+        sg3: "Cloud and data",
+        fitTitle: "Best-fit engagements",
+        fit1: "Teams with active products where reliability and release quality are non-negotiable.",
+        fit2: "Organizations that need senior execution without hand-holding and without delivery chaos.",
+        fit3: "Projects requiring direct communication with stakeholders and clear technical accountability.",
+        contactTitle: "Need a senior engineer who can execute fast and communicate clearly with leadership?",
+        contactCopy: "I work with a limited number of clients to keep delivery quality high. If your product has real users and zero margin for unstable releases, let's discuss scope, constraints, and expected outcomes.",
+        footerRemote: "Open to remote opportunities in Mexico and the United States"
+      },
+      es: {
+        topStatus: "Ingeniero Full-Stack Senior · Arquitecto de Soluciones Móviles · Especialista en Cloud",
+        heroEyebrow: "Ejecución de software premium para equipos enterprise y empresas en crecimiento",
+        heroRole: "Construyo plataformas críticas para ingresos, productos móviles y automatizaciones cloud con impacto de negocio medible.",
+        heroLead: "Durante más de 12 años he entregado productos de alta disponibilidad en web y móvil, liderado decisiones técnicas complejas y sostenido versiones estables para equipos que no pueden permitirse caídas, retrasos ni estándares de ingeniería bajos.",
+        ctaPrimary: "Agendar llamada de descubrimiento",
+        ctaSecondary: "Revisar experiencia",
+        trust1: "Entrega bilingüe: inglés y español",
+        trust2: "Cobertura horaria México y Estados Unidos",
+        trust3: "Carga selecta de clientes para máxima ejecución",
+        heroImageAlt: "Estación de trabajo de desarrollo con pantallas de código",
+        badge1Title: "Comunicación de nivel ejecutivo",
+        badge1Sub: "Profundidad técnica sin ambigüedad de negocio",
+        badge2Title: "Arquitectura y ejecución práctica",
+        badge2Sub: "De estrategia de producto a versión en producción",
+        metric1Label: "Años entregando sistemas en producción",
+        metric2Label: "Apps móviles publicadas en App Store y Google Play",
+        metric3Label: "Historial de aprobación en tiendas en ciclos de publicación",
+        metric4Label: "Reducción de carga operativa en reclutamiento por automatización",
+        servicesKicker: "Lo que entrego",
+        servicesTitle: "Ejecución senior para productos que impactan ingresos, operación y crecimiento.",
+        servicesDesc: "Colaboro con fundadores, directores y líderes de producto que necesitan liderazgo de ingeniería práctico, no complejidad innecesaria. El enfoque es claro: entregar más rápido, con estabilidad y resultados de negocio visibles.",
+        svc1Title: "Plataformas web con confiabilidad empresarial",
+        svc1Desc: "Arquitectura e implementación de servicios backend, APIs seguras y tableros operativos con pipelines de despliegue sin tiempo de inactividad.",
+        svc2Title: "Productos móviles diseñados para retención",
+        svc2Desc: "Entrega multiplataforma para iOS y Android con alto cumplimiento en tiendas, gestión de versiones confiable e implementación centrada en rendimiento.",
+        svc3Title: "Automatización cloud y orquestación de procesos",
+        svc3Desc: "Flujos automatizados con AWS y plataformas de comunicación para eliminar cuellos de botella manuales y aumentar la capacidad de entrega del equipo.",
+        resultsKicker: "Impacto de negocio",
+        resultsTitle: "Resultados documentados en entornos productivos.",
+        resultsDesc: "No son prototipos. Cada resultado proviene de sistemas que debían rendir con volumen real de usuarios y presión operativa.",
+        result1Title: "Reducción de operación manual en reclutamiento",
+        result1Desc: "Flujos automatizados de contact center con Amazon Connect, Lambda e integraciones de voz, SMS y WhatsApp.",
+        result2Title: "Aplicaciones móviles publicadas",
+        result2Desc: "Apps entregadas para retail, operaciones, geolocalización y compras in-app con continuidad de mantenimiento a largo plazo.",
+        result3Title: "Estándares de confiabilidad en producción",
+        result3Desc: "Plataformas web de alta demanda diseñadas para disponibilidad, bases de datos resilientes y cadencia de publicaciones predecible.",
+        expKicker: "Experiencia profesional",
+        expTitle: "Ingeniero Full-Stack Senior y Arquitecto de Soluciones Móviles",
+        expSubtitle: "Entrega de software empresarial con responsabilidad directa sobre arquitectura, implementación, coordinación de QA y estabilidad de versiones.",
+        expRole: "Ingeniero Full-Stack Senior y Arquitecto de Soluciones Móviles",
+        expCompany: "Proyectos de software empresarial · México",
+        expPeriod: "2012 — Presente",
+        b1: "Diseñé y entregué portales Laravel de alta demanda, soportando miles de usuarios concurrentes con cargas optimizadas en PostgreSQL y MySQL.",
+        b2: "Construí automatización de reclutamiento de extremo a extremo en Amazon Connect con orquestación en Lambda, reduciendo la carga manual en más de 60%.",
+        b3: "Publiqué y mantuve más de 40 apps híbridas para iOS y Android con Ionic, Angular y Capacitor, con aprobación cercana al 100% en tiendas.",
+        b4: "Implementé compras in-app nativas, validación de suscripciones y flujos de pruebas en sandbox para ecosistemas Apple y Google.",
+        b5: "Desarrollé pipelines OCR y de procesamiento documental en AWS para validación de identidad y formularios a escala.",
+        b6: "Integré mensajería omnicanal con Twilio, SparkPost y LabsMobile, procesando notificaciones mensuales de alto volumen.",
+        stackKicker: "Enfoque tecnológico",
+        stackTitle: "Stack elegido para velocidad de entrega, escala y mantenibilidad de largo plazo.",
+        stackDesc: "Selecciono tecnologías con base en ajuste de negocio, contexto del equipo y sostenibilidad operativa, no en ciclos de moda.",
+        stackPanelTitle: "Stack principal",
+        sg1: "Backend",
+        sg2: "Frontend y móvil",
+        sg3: "Cloud y datos",
+        fitTitle: "Proyectos ideales",
+        fit1: "Equipos con productos activos donde confiabilidad y calidad de publicación son innegociables.",
+        fit2: "Organizaciones que requieren ejecución senior sin microgestión y sin caos de entrega.",
+        fit3: "Proyectos que exigen comunicación directa con stakeholders y responsabilidad técnica clara.",
+        contactTitle: "¿Buscas un ingeniero senior que ejecute rápido y se comunique con claridad con dirección?",
+        contactCopy: "Trabajo con una cantidad limitada de clientes para mantener un estándar alto de entrega. Si tu producto tiene usuarios reales y no puede permitirse versiones inestables, conversemos sobre alcance, restricciones y resultados esperados.",
+        footerRemote: "Disponible para oportunidades remotas en México y Estados Unidos"
+      }
+    };
 
-<script>
-const T = {
-  en: {
-    tagline: "Senior Full-Stack Engineer · Mobile Architect · Cloud Specialist",
-    heroSub: "12+ years engineering high-availability platforms, enterprise-grade mobile ecosystems, and cloud-native automation at scale.",
-    kpi1: "Years in production", kpi2: "Apps shipped", kpi3: "App Store approval rate",
-    location: "México · Open to remote / relocation",
-    skillsLabel: "Core Competencies",
-    sk1: "Backend Engineering", sk2: "Frontend &amp; UI/UX", sk3: "Mobile Engineering",
-    sk4: "Cloud &amp; Infrastructure", sk5: "Data &amp; Storage", sk6: "Integrations &amp; APIs",
-    tagQueue: "Queue Systems", tagDesign: "UX/UI Design", tagIAP: "In-App Purchases",
-    tagPush: "Push Notifications", tagQuery: "Query Optimization", tagPhone: "Phone Validation",
-    expLabel: "Professional Experience",
-    expRole: "Senior Full-Stack Engineer &amp; Mobile Architect",
-    expCompany: "Enterprise Software Projects — Mexico",
-    expYears: "2012 — Present",
-    b1: "Architected and delivered <strong>high-demand web portals</strong> using Laravel, handling thousands of concurrent users with zero-downtime deployments and optimized query pipelines on PostgreSQL and MySQL.",
-    b2: "Designed end-to-end <strong>automated recruitment contact centers</strong> on Amazon Connect, configuring Contact Flows and AWS Lambda functions to orchestrate candidate screening via voice, SMS, and WhatsApp — reducing manual recruiter workload by over 60%.",
-    b3: "Built and launched <strong>40+ iOS and Android hybrid applications</strong> using Ionic + Angular + Capacitor. Maintained a near-100% App Store / Google Play approval rate by proactively resolving reviewer observations across submission cycles.",
-    b4: "Integrated <strong>native In-App Purchase flows</strong> (StoreKit 2 / Google Play Billing) on both platforms, including subscription management, receipt validation, and sandbox testing pipelines.",
-    b5: "Implemented <strong>Geofencing and real-time GPS tracking</strong> via Google Maps Platform, powering delivery-tracking and field-operations apps with sub-second location accuracy.",
-    b6: "Engineered <strong>OCR document processing pipelines</strong> on AWS, extracting and structuring data from identity documents and forms at scale, feeding downstream validation workflows.",
-    b7: "Developed enterprise-grade <strong>school management systems and administrative ERPs</strong> with multi-role access control, cryptographic data protection, and complex algorithmic selection processes.",
-    b8: "Built and deployed <strong>omnichannel messaging systems</strong> orchestrating Twilio (SMS + WhatsApp), SparkPost (bulk email), and LabsMobile — processing hundreds of thousands of notifications monthly.",
-    b9: "Led frontend engineering using TypeScript, Angular, and Vue.js alongside real-time WebSocket dashboards, delivering rich UX/UI experiences backed by deep product design knowledge.",
-    b10: "Developed a <strong>cross-platform mobile game</strong> with React Native and shipped production <strong>Android applications</strong> in Kotlin with native performance optimizations.",
-    mobileLabel: "Mobile App Portfolio — 40+ Published Apps",
-    mobileDesc: "Spanning both App Store and Google Play, with a consistent near-100% approval rate. Application categories include:",
-    pill1: "Point of Sale", pill2: "Product Catalogs", pill3: "Order Tracking",
-    pill4: "Field Data Capture", pill5: "Maps &amp; Geofencing", pill6: "In-App Purchases",
-    pill7: "Push Notifications", pill8: "Mobile Gaming", pill9: "Recruitment Tools",
-    cloudLabel: "Cloud Platforms &amp; Services",
-    commLabel: "Communications", authLabel: "Auth &amp; Security",
-    eduLabel: "Education", eduDegree: "B.Sc. in Computer Science",
-    footerRemote: "Open to remote opportunities in Mexico &amp; the United States"
-  },
-  es: {
-    tagline: "Ingeniero Full-Stack Senior · Arquitecto Mobile · Especialista Cloud",
-    heroSub: "Más de 12 años diseñando plataformas de alta disponibilidad, ecosistemas móviles empresariales y automatización nativa en la nube a gran escala.",
-    kpi1: "Años en producción", kpi2: "Apps publicadas", kpi3: "Tasa de aprobación App Store",
-    location: "México · Disponible para trabajo remoto / reubicación",
-    skillsLabel: "Competencias Principales",
-    sk1: "Ingeniería Backend", sk2: "Frontend &amp; UI/UX", sk3: "Ingeniería Mobile",
-    sk4: "Cloud e Infraestructura", sk5: "Datos y Almacenamiento", sk6: "Integraciones y APIs",
-    tagQueue: "Sistemas de Colas", tagDesign: "Diseño UX/UI", tagIAP: "Compras In-App",
-    tagPush: "Notificaciones Push", tagQuery: "Optimización de Consultas", tagPhone: "Validación Telefónica",
-    expLabel: "Experiencia Profesional",
-    expRole: "Ingeniero Full-Stack Senior &amp; Arquitecto Mobile",
-    expCompany: "Proyectos de Software Empresarial — México",
-    expYears: "2012 — Presente",
-    b1: "Diseñó y entregó <strong>portales web de alta demanda</strong> con Laravel, soportando miles de usuarios concurrentes con despliegues sin tiempo de inactividad y pipelines de consulta optimizados en PostgreSQL y MySQL.",
-    b2: "Diseñó <strong>centros de contacto de reclutamiento automatizados</strong> de extremo a extremo en Amazon Connect, configurando Contact Flows y funciones AWS Lambda para orquestar el filtrado de candidatos por voz, SMS y WhatsApp — reduciendo la carga manual de reclutadores en más del 60%.",
-    b3: "Construyó y lanzó <strong>más de 40 aplicaciones híbridas para iOS y Android</strong> con Ionic + Angular + Capacitor. Mantuvo una tasa de aprobación cercana al 100% en App Store y Google Play resolviendo proactivamente las observaciones de revisión.",
-    b4: "Integró <strong>flujos nativos de Compras In-App</strong> (StoreKit 2 / Google Play Billing) en ambas plataformas, incluyendo gestión de suscripciones, validación de recibos y pipelines de prueba en sandbox.",
-    b5: "Implementó <strong>Geocercas y rastreo GPS en tiempo real</strong> mediante Google Maps Platform, impulsando apps de seguimiento de entregas y operaciones en campo con precisión de ubicación por debajo del segundo.",
-    b6: "Desarrolló <strong>pipelines de procesamiento OCR de documentos</strong> en AWS, extrayendo y estructurando datos de documentos de identidad y formularios a escala, alimentando flujos de validación posteriores.",
-    b7: "Desarrolló <strong>sistemas de gestión escolar y ERPs administrativos</strong> de nivel empresarial con control de acceso multirol, protección criptográfica de datos y algoritmos complejos de procesos de selección.",
-    b8: "Construyó y desplegó <strong>sistemas de mensajería omnicanal</strong> orquestando Twilio (SMS + WhatsApp), SparkPost (email masivo) y LabsMobile — procesando cientos de miles de notificaciones mensualmente.",
-    b9: "Lideró la ingeniería frontend con TypeScript, Angular y Vue.js junto a dashboards en tiempo real con WebSockets, entregando experiencias UX/UI enriquecidas respaldadas por profundo conocimiento en diseño de producto.",
-    b10: "Desarrolló un <strong>juego móvil multiplataforma</strong> con React Native y publicó <strong>aplicaciones Android en producción</strong> en Kotlin con optimizaciones de rendimiento nativo.",
-    mobileLabel: "Portafolio Mobile — 40+ Apps Publicadas",
-    mobileDesc: "Distribuidas entre App Store y Google Play, con una tasa de aprobación consistente cercana al 100%. Categorías de aplicaciones:",
-    pill1: "Punto de Venta", pill2: "Catálogos de Productos", pill3: "Seguimiento de Pedidos",
-    pill4: "Captura de Datos en Campo", pill5: "Mapas y Geocercas", pill6: "Compras In-App",
-    pill7: "Notificaciones Push", pill8: "Juegos Móviles", pill9: "Herramientas de Reclutamiento",
-    cloudLabel: "Plataformas Cloud y Servicios",
-    commLabel: "Comunicaciones", authLabel: "Auth y Seguridad",
-    eduLabel: "Educación", eduDegree: "Lic. en Informática",
-    footerRemote: "Disponible para oportunidades remotas en México y Estados Unidos"
-  }
-};
+    let lang = "en";
 
-let lang = 'en';
+    function renderIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+      }
+    }
 
-function setLang(l) {
-  if (l === lang) return;
-  lang = l;
-  document.body.classList.add('lang-switching');
-  setTimeout(() => {
-    const t = T[l];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const k = el.getAttribute('data-i18n');
-      if (t[k] !== undefined) el.innerHTML = t[k];
+    function applyLanguage(nextLang) {
+      const t = T[nextLang];
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key] !== undefined) {
+          el.innerHTML = t[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
+        const mappings = el.getAttribute("data-i18n-attr").split("|");
+        mappings.forEach((mapping) => {
+          const parts = mapping.split(":");
+          const attr = parts[0] ? parts[0].trim() : "";
+          const key = parts[1] ? parts[1].trim() : "";
+          if (attr && key && t[key] !== undefined) {
+            el.setAttribute(attr, t[key]);
+          }
+        });
+      });
+
+      document.documentElement.lang = nextLang;
+      document.getElementById("btn-en").classList.toggle("active", nextLang === "en");
+      document.getElementById("btn-es").classList.toggle("active", nextLang === "es");
+      localStorage.setItem("lang", nextLang);
+      renderIcons();
+    }
+
+    function setLang(nextLang) {
+      if (!T[nextLang] || nextLang === lang) return;
+      lang = nextLang;
+      document.body.classList.add("lang-switching");
+      setTimeout(() => {
+        applyLanguage(nextLang);
+        document.body.classList.remove("lang-switching");
+      }, 150);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("lang");
+      if (saved && T[saved]) {
+        lang = saved;
+      }
+      applyLanguage(lang);
     });
-    document.documentElement.lang = l;
-    document.getElementById('btn-en').classList.toggle('active', l === 'en');
-    document.getElementById('btn-es').classList.toggle('active', l === 'es');
-    document.body.classList.remove('lang-switching');
-  }, 150);
-}
-</script>
+  </script>
 </body>
 </html>
